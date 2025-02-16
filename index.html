@@ -33,8 +33,7 @@
         .letter {
             font-size: 48px;
             font-weight: bold;
-            opacity: 0;
-            transition: opacity 2s ease-in-out, transform 2s ease-in-out;
+            opacity: 1; /* Bez animace změny opacity, písmena jsou ihned viditelná */
         }
         .space {
             display: inline-block;
@@ -112,15 +111,6 @@
             container.appendChild(span);
             letters.push(span);
         });
-
-        setTimeout(() => {
-            letters.forEach((letter, index) => {
-                setTimeout(() => {
-                    letter.style.opacity = 1;
-                    letter.style.transform = "rotate(0deg) scale(1)";
-                }, index * 100);
-            });
-        }, 500);
     });
 
     function submitResponse() {
