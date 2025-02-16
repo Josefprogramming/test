@@ -29,13 +29,16 @@
             max-width: 1000px; /* Zajišťuje širší rozložení pro delší text */
             overflow: hidden;
             letter-spacing: 5px; /* Mezera mezi písmeny */
-            word-spacing: 15px; /* Mezera mezi slovy */
         }
         .letter {
             font-size: 48px;
             font-weight: bold;
             opacity: 0;
             transition: opacity 2s ease-in-out, transform 2s ease-in-out;
+        }
+        .space {
+            display: inline-block;
+            width: 20px; /* Šířka mezery mezi slovy */
         }
         input, button {
             margin-top: 20px;
@@ -59,8 +62,19 @@
         const container = document.getElementById("text");
         let letters = [];
 
-        text.split("").forEach((char, index) => {
+        // Rozdělení textu na jednotlivé znaky a přidání mezer
+        text.split("").forEach((char) => {
             let span = document.createElement("span");
+
+            if (char === " ") {
+                // Pokud je znak mezera, přidej prázdný span pro mezeru
+                let space = document.createElement("span");
+                space.classList.add("space");
+                container.appendChild(space);
+                letters.push(space);
+                return; // Nepokračujeme dále pro tuto mezeru
+            }
+
             span.textContent = char;
             span.classList.add("letter");
             container.appendChild(span);
