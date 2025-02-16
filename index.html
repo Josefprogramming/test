@@ -15,18 +15,19 @@
             font-family: Arial, sans-serif;
             color: white;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-            overflow: hidden;
+            overflow: hidden; /* Skrytí všeho mimo obrazovku */
             text-align: center;
             padding: 20px;
         }
         .text-container {
             position: relative;
-            display: inline-block; /* Zajistí, že text bude na jednom řádku */
-            white-space: nowrap; /* Zabrání dělení slov */
-            letter-spacing: 5px; /* Mezera mezi písmeny */
-            word-spacing: 15px; /* Mezera mezi slovy */
-            max-width: 100%; /* Umožní textu přetéct, pokud nebude mít dost místa */
-            overflow: hidden; /* Skrytí přetečení */
+            display: inline-block;
+            white-space: nowrap;
+            letter-spacing: 5px;
+            word-spacing: 15px;
+            max-width: 100%;
+            overflow: hidden;
+            word-wrap: break-word; /* Dovolí lámat dlouhá slova */
         }
         .letter {
             font-size: 48px;
@@ -81,50 +82,4 @@
     <div class="text-container" id="text"></div>
     <input type="text" id="response" placeholder="Write your answer here...">
     <button onclick="submitResponse()">Submit</button>
-    <p id="displayResponse"></p>
-    <p id="message" style="display: none; font-size: 20px; margin-top: 20px;">Josi nevidí zprávu, napiš mu SMS :)</p>
-    
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const text = "HELLO DONA, how are you? Are you sleeping?";
-        const container = document.getElementById("text");
-        let letters = [];
-
-        // Rozdělení textu na jednotlivé znaky a přidání mezer
-        text.split("").forEach((char) => {
-            let span = document.createElement("span");
-
-            if (char === " ") {
-                // Pokud je znak mezera, přidej prázdný span pro mezeru
-                let space = document.createElement("span");
-                space.classList.add("space");
-                container.appendChild(space);
-                letters.push(space);
-                return; // Nepokračujeme dále pro tuto mezeru
-            }
-
-            span.textContent = char;
-            span.classList.add("letter");
-            container.appendChild(span);
-            letters.push(span);
-        });
-
-        setTimeout(() => {
-            letters.forEach((letter, index) => {
-                setTimeout(() => {
-                    letter.style.opacity = 1;
-                    letter.style.transform = "rotate(0deg) scale(1)";
-                }, index * 100);
-            });
-        }, 500);
-    });
-
-    function submitResponse() {
-        let response = document.getElementById("response").value;
-        document.getElementById("displayResponse").innerText = "Your response: " + response;
-        document.getElementById("message").style.display = "block";
-    }
-</script>
-
-</body>
-</html>
+   
