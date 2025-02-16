@@ -11,7 +11,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: linear-gradient(45deg, red, black, yellow, black);
+            background: linear-gradient(45deg, red, orange, yellow);
             font-family: Arial, sans-serif;
             color: white;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
@@ -28,22 +28,14 @@
             width: 90%; /* Zvětšení šířky, aby se text vešel */
             max-width: 1000px; /* Zajišťuje širší rozložení pro delší text */
             overflow: hidden;
-            letter-spacing: 5px; /* Dynamická mezera mezi písmeny */
-            .space {
-            display: inline-block;
-            width: 20px; /* Šířka mezery mezi slovy */
-        }
+            letter-spacing: 5px; /* Mezera mezi písmeny */
+            word-spacing: 15px; /* Mezera mezi slovy */
         }
         .letter {
             font-size: 48px;
             font-weight: bold;
             opacity: 0;
             transition: opacity 2s ease-in-out, transform 2s ease-in-out;
-            }
-            .space {
-            display: inline-block;
-            width: 20px; /* Šířka mezery mezi slovy */
-            
         }
         input, button {
             margin-top: 20px;
@@ -66,23 +58,12 @@
         const text = "HELLO DONA, how are you? Are you sleeping?";
         const container = document.getElementById("text");
         let letters = [];
-        let currentRow = [];
 
         text.split("").forEach((char, index) => {
             let span = document.createElement("span");
             span.textContent = char;
             span.classList.add("letter");
-
-            currentRow.push(span);
-
-            // Pokud se aktuální řádek nevejde, přesuneme písmena do dalšího
-            if (currentRow.join('').length > 15) {
-                container.appendChild(document.createElement('br')); // Přidáme nový řádek
-                currentRow = [];
-            }
-
             container.appendChild(span);
-
             letters.push(span);
         });
 
