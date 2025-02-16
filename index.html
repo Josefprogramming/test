@@ -19,8 +19,9 @@
         h1 {
             font-size: 48px;
             font-weight: bold;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
+            opacity: 1;
+            position: relative; /* Umožní správné umístění písmen */
+            height: 60px; /* Rezervuje prostor, aby písmena nebyla rozházená */
         }
         input, button {
             margin-top: 20px;
@@ -28,6 +29,11 @@
             padding: 10px;
             border: none;
             border-radius: 5px;
+        }
+        .letter {
+            position: absolute;
+            opacity: 0;
+            transition: all 2s ease-in-out, transform 2s ease-in-out;
         }
     </style>
 </head>
@@ -47,13 +53,11 @@
         text.split("").forEach((char, index) => {
             let span = document.createElement("span");
             span.textContent = char;
-            span.style.position = "absolute";
+            span.classList.add("letter");
             span.style.left = `${Math.random() * window.innerWidth}px`;
             span.style.top = `${Math.random() * window.innerHeight}px`;
-            span.style.opacity = 0;
-            span.style.transition = "all 2s ease-in-out, transform 2s ease-in-out";
             container.appendChild(span);
-            letters.push({ span, targetLeft: index * 20 + 50, targetTop: 100 });
+            letters.push({ span, targetLeft: index * 20, targetTop: 0 });
         });
 
         setTimeout(() => {
@@ -67,6 +71,12 @@
             });
         }, 500);
     });
+
+    function submitResponse() {
+        let response = document.getElementById("response").value;
+        document.getElementById("displayResponse").innerText = "Your response: " + response;
+        document.getElementById("message").style.display = "block";
+    }
 </script>
 
 </body>
