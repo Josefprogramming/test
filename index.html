@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Message</title>
+    <title>Flying Letters Animation</title>
     <style>
         body {
             display: flex;
@@ -15,13 +15,22 @@
             font-family: Arial, sans-serif;
             color: white;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            overflow: hidden; /* Zabrání posunutí při animaci */
         }
-        h1 {
+        .text-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 60px;
+            width: 100%;
+        }
+        .letter {
+            position: absolute;
             font-size: 48px;
             font-weight: bold;
-            opacity: 1;
-            position: relative; /* Umožní správné umístění písmen */
-            height: 60px; /* Rezervuje prostor, aby písmena nebyla rozházená */
+            opacity: 0;
+            transition: all 2s ease-in-out, transform 2s ease-in-out;
         }
         input, button {
             margin-top: 20px;
@@ -30,15 +39,10 @@
             border: none;
             border-radius: 5px;
         }
-        .letter {
-            position: absolute;
-            opacity: 0;
-            transition: all 2s ease-in-out, transform 2s ease-in-out;
-        }
     </style>
 </head>
 <body>
-    <h1 id="text"></h1>
+    <div class="text-container" id="text"></div>
     <input type="text" id="response" placeholder="Write your answer here...">
     <button onclick="submitResponse()">Submit</button>
     <p id="displayResponse"></p>
@@ -57,12 +61,18 @@
             span.style.left = `${Math.random() * window.innerWidth}px`;
             span.style.top = `${Math.random() * window.innerHeight}px`;
             container.appendChild(span);
-            letters.push({ span, targetLeft: index * 20, targetTop: 0 });
+
+            letters.push({
+                span,
+                targetLeft: index * 30, // Mezera mezi písmeny
+                targetTop: 0
+            });
         });
 
         setTimeout(() => {
             letters.forEach((letter, index) => {
                 setTimeout(() => {
+                    letter.span.style.position = "relative";
                     letter.span.style.left = `${letter.targetLeft}px`;
                     letter.span.style.top = `${letter.targetTop}px`;
                     letter.span.style.opacity = 1;
