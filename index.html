@@ -7,12 +7,11 @@
     <style>
         body {
             display: flex;
-            flex-wrap: wrap; /* Povolit přechod na nový řádek */
             flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: linear-gradient(45deg, red, orange, yellow);
+            background: linear-gradient(45deg, red, purple, black);
             font-family: Arial, sans-serif;
             color: white;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
@@ -22,26 +21,26 @@
         .text-container {
             position: relative;
             display: flex;
+            flex-wrap: wrap; /* Povolit přechod na nový řádek */
             justify-content: center;
             align-items: center;
-            height: 60px;
-            width: 90%; /* Zabrání textu vylézt ze stránky */
-            max-width: 1200px; /* Zajišťuje pěkné rozložení */
+            height: auto;
+            width: 90%; /* Zvětšení šířky, aby se text vešel */
+            max-width: 1000px; /* Zajišťuje širší rozložení pro delší text */
             overflow: hidden;
         }
         .letter {
-            position: absolute;
             font-size: 48px;
             font-weight: bold;
             opacity: 0;
-            transition: all 5s ease-in-out, transform 5s ease-in-out;
+            transition: opacity 2s ease-in-out, transform 2s ease-in-out;
         }
         input, button {
             margin-top: 20px;
             font-size: 18px;
-            padding: 1px;
+            padding: 10px;
             border: none;
-            border-radius: 1px;
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -57,33 +56,31 @@
         const text = "HELLO DONA, how are you? Are you sleeping?";
         const container = document.getElementById("text");
         let letters = [];
-
-        const containerWidth = container.clientWidth; // Šířka kontejneru
-        const letterSpacing = containerWidth / text.length; // Dynamická mezera mezi písmeny
+        let currentRow = [];
 
         text.split("").forEach((char, index) => {
             let span = document.createElement("span");
             span.textContent = char;
             span.classList.add("letter");
-            span.style.left = `${Math.random() * window.innerWidth}px`;
-            span.style.top = `${Math.random() * window.innerHeight}px`;
+
+            currentRow.push(span);
+
+            // Pokud se aktuální řádek nevejde, přesuneme písmena do dalšího
+            if (currentRow.join('').length > 15) {
+                container.appendChild(document.createElement('br')); // Přidáme nový řádek
+                currentRow = [];
+            }
+
             container.appendChild(span);
 
-            letters.push({
-                span,
-                targetLeft: index * letterSpacing, // Dynamické rozložení textu
-                targetTop: 0
-            });
+            letters.push(span);
         });
 
         setTimeout(() => {
             letters.forEach((letter, index) => {
                 setTimeout(() => {
-                    letter.span.style.position = "relative";
-                    letter.span.style.left = `${letter.targetLeft}px`;
-                    letter.span.style.top = `${letter.targetTop}px`;
-                    letter.span.style.opacity = 1;
-                    letter.span.style.transform = "rotate(0deg) scale(1)";
+                    letter.style.opacity = 1;
+                    letter.style.transform = "rotate(0deg) scale(1)";
                 }, index * 100);
             });
         }, 500);
