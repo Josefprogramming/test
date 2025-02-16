@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Message</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(45deg, red, orange, yellow);
+            font-family: Arial, sans-serif;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+        h1 {
+            font-size: 48px;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        input, button {
+            margin-top: 20px;
+            font-size: 18px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="text"></h1>
+    <input type="text" id="response" placeholder="Write your answer here...">
+    <button onclick="submitResponse()">Submit</button>
+    <p id="displayResponse"></p>
+    <p id="message" style="display: none; font-size: 20px; margin-top: 20px;">Josi nevidí zprávu, napiš mu SMS :)</p>
+    
+    <script>
+        const text = "HELLO NEJLA, how are you?";
+        let index = 0;
+        function showText() {
+            if (index < text.length) {
+                document.getElementById("text").innerHTML += text[index];
+                document.getElementById("text").style.opacity = 1;
+                index++;
+                setTimeout(showText, 150);
+            }
+        }
+        
+        function submitResponse() {
+            let response = document.getElementById("response").value;
+            document.getElementById("displayResponse").innerText = "Your response: " + response;
+            document.getElementById("message").style.display = "block";
+        }
+        
+        window.onload = showText;
+    </script>
+</body>
+</html>
