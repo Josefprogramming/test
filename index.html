@@ -15,7 +15,8 @@
             font-family: Arial, sans-serif;
             color: white;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-            overflow: hidden; /* Zabrání posunutí při animaci */
+            overflow: hidden;
+            text-align: center;
         }
         .text-container {
             position: relative;
@@ -23,7 +24,9 @@
             justify-content: center;
             align-items: center;
             height: 60px;
-            width: 100%;
+            width: 80%; /* Zabrání textu vylézt ze stránky */
+            max-width: 800px; /* Zajišťuje pěkné rozložení */
+            overflow: hidden;
         }
         .letter {
             position: absolute;
@@ -50,9 +53,12 @@
     
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-        const text = "HELLO NEJLA, how are you?";
+        const text = "HELLO DONA, how are you? Are you sleeping?";
         const container = document.getElementById("text");
         let letters = [];
+
+        const containerWidth = container.clientWidth; // Šířka kontejneru
+        const letterSpacing = containerWidth / text.length; // Dynamická mezera mezi písmeny
 
         text.split("").forEach((char, index) => {
             let span = document.createElement("span");
@@ -64,7 +70,7 @@
 
             letters.push({
                 span,
-                targetLeft: index * 30, // Mezera mezi písmeny
+                targetLeft: index * letterSpacing, // Dynamické rozložení textu
                 targetTop: 0
             });
         });
