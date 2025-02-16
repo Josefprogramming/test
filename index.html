@@ -11,12 +11,13 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: linear-gradient(45deg, red, pink, black);
+            background: linear-gradient(45deg, red, orange, yellow);
             font-family: Arial, sans-serif;
             color: white;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
             overflow: hidden;
             text-align: center;
+            padding: 20px;
         }
         .text-container {
             position: relative;
@@ -43,6 +44,36 @@
             padding: 10px;
             border: none;
             border-radius: 5px;
+        }
+
+        /* Responzivní styly pro mobilní zařízení */
+        @media (max-width: 768px) {
+            .letter {
+                font-size: 36px; /* Menší písmo pro mobil */
+            }
+            .text-container {
+                letter-spacing: 3px; /* Zmenšíme mezeru mezi písmeny na mobilu */
+                word-spacing: 10px; /* Menší mezera mezi slovy */
+            }
+            input, button {
+                font-size: 16px; /* Menší tlačítka a pole pro mobil */
+                padding: 8px;
+            }
+        }
+
+        /* Responzivní styly pro extra malé obrazovky */
+        @media (max-width: 480px) {
+            .letter {
+                font-size: 30px; /* Menší písmo pro velmi malé obrazovky */
+            }
+            .text-container {
+                letter-spacing: 2px; /* Ještě menší mezera mezi písmeny */
+                word-spacing: 8px; /* Menší mezera mezi slovy */
+            }
+            input, button {
+                font-size: 14px; /* Ještě menší tlačítka a pole */
+                padding: 6px;
+            }
         }
     </style>
 </head>
