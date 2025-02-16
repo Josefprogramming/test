@@ -20,15 +20,12 @@
         }
         .text-container {
             position: relative;
-            display: flex;
-            flex-wrap: wrap; /* Povolit přechod na nový řádek */
-            justify-content: center;
-            align-items: center;
-            height: auto;
-            width: 90%; /* Zvětšení šířky, aby se text vešel */
-            max-width: 1000px; /* Zajišťuje širší rozložení pro delší text */
-            overflow: hidden;
+            display: inline-block; /* Zajistí, že text bude na jednom řádku */
+            white-space: nowrap; /* Zabrání dělení slov */
             letter-spacing: 5px; /* Mezera mezi písmeny */
+            word-spacing: 15px; /* Mezera mezi slovy */
+            max-width: 100%; /* Umožní textu přetéct, pokud nebude mít dost místa */
+            overflow: hidden; /* Skrytí přetečení */
         }
         .letter {
             font-size: 48px;
