@@ -38,25 +38,34 @@
     <p id="displayResponse"></p>
     <p id="message" style="display: none; font-size: 20px; margin-top: 20px;">Josi nevidí zprávu, napiš mu SMS :)</p>
     
-    <script>
-        const text = "HELLO NEJLA, how are you?";
-        let index = 0;
-        function showText() {
-            if (index < text.length) {
-                document.getElementById("text").innerHTML += text[index];
-                document.getElementById("text").style.opacity = 1;
-                index++;
-                setTimeout(showText, 150);
-            }
-        }
-        
-        function submitResponse() {
-            let response = document.getElementById("response").value;
-            document.getElementById("displayResponse").innerText = "Your response: " + response;
-            document.getElementById("message").style.display = "block";
-        }
-        
-        window.onload = showText;
-    </script>
+ document.addEventListener("DOMContentLoaded", () => {
+    const text = "HELLO NEJLA, how are you?";
+    const container = document.getElementById("text");
+    let letters = [];
+    
+    text.split("").forEach((char, index) => {
+        let span = document.createElement("span");
+        span.textContent = char;
+        span.style.position = "absolute";
+        span.style.left = `${Math.random() * window.innerWidth}px`;
+        span.style.top = `${Math.random() * window.innerHeight}px`;
+        span.style.opacity = 0;
+        span.style.transition = "all 2s ease-in-out, transform 2s ease-in-out";
+        container.appendChild(span);
+        letters.push({ span, targetLeft: index * 20 + 50, targetTop: 100 });
+    });
+    
+    setTimeout(() => {
+        letters.forEach((letter, index) => {
+            setTimeout(() => {
+                letter.span.style.left = `${letter.targetLeft}px`;
+                letter.span.style.top = `${letter.targetTop}px`;
+                letter.span.style.opacity = 1;
+                letter.span.style.transform = "rotate(0deg) scale(1)";
+            }, index * 100);
+        });
+    }, 500);
+});
+
 </body>
 </html>
