@@ -51,99 +51,75 @@ button {
     <input type="text" id="response" placeholder="Write Yes or No...">
     <button onclick="submitResponse()">Send</button>
     
-   <script>
-    const text = "IT'S SUNNY! WE ARE GOING OUT!";
-    const container = document.getElementById("text");
+  <script>
+const text = "IT'S SUNNY! WE ARE GOING OUT!";
+const container = document.getElementById("text");
 
-    function createFlyingText() {
-        container.innerHTML = "";
+function createFlyingText() {
 
-        const letters = [];
+    container.innerHTML = "";
 
-        text.split("").forEach((char) => {
-            const span = document.createElement("span");
+    // Vytvoříme celý text jako jednotlivá písmena
+    text.split("").forEach((char, index) => {
 
-            span.textContent = char === " " ? "\u00A0" : char;
+        const span = document.createElement("span");
 
-            span.style.position = "fixed";
-            span.style.fontSize = "clamp(28px, 5vw, 48px)";
-            span.style.fontWeight = "bold";
+        span.textContent = char === " " ? "\u00A0" : char;
+
+        span.style.display = "inline-block";
+        span.style.fontSize = "clamp(28px, 5vw, 48px)";
+        span.style.fontWeight = "bold";
+
+        // Písmeno začíná 100vh nad svou výslednou pozicí
+        span.style.transform = "translateY(-100vh) rotate(" +
+            (Math.random() * 40 - 20) + "deg)";
+
+        span.style.opacity = "0";
+
+        span.style.transition =
+            "transform 1s cubic-bezier(.2,.8,.3,1), " +
+            "opacity 0.3s ease";
+
+        container.appendChild(span);
+
+        // Každé písmeno začne padat postupně
+        setTimeout(() => {
+
             span.style.opacity = "1";
-            span.style.pointerEvents = "none";
+            span.style.transform = "translateY(0) rotate(0deg)";
 
-            // Začátek nad obrazovkou
-            span.style.left = "0px";
-            span.style.top = "-100px";
+        }, index * 80);
+    });
 
-            // Lehké náhodné natočení
-            span.style.transform =
-                "rotate(" + (Math.random() * 60 - 30) + "deg)";
+    // Zobrazení celého textového kontejneru
+    container.style.opacity = "1";
+}
 
-            span.style.transition =
-                "top 1s cubic-bezier(.2,.8,.3,1), " +
-                "transform 1s ease-out";
 
-            document.body.appendChild(span);
+// YES / NO
+function submitResponse() {
 
-            letters.push(span);
-        });
+    let response = document
+        .getElementById("response")
+        .value
+        .trim()
+        .toLowerCase();
 
-        requestAnimationFrame(() => {
+    localStorage.setItem("userResponse", response);
 
-            let totalWidth = 0;
-            const widths = [];
-
-            letters.forEach(letter => {
-                const width = letter.getBoundingClientRect().width;
-                widths.push(width);
-                totalWidth += width;
-            });
-
-            const spacing = 2;
-            totalWidth += spacing * (letters.length - 1);
-
-            // Zarovnání textu doprostřed obrazovky
-            let currentX = (window.innerWidth - totalWidth) / 2;
-
-            const targetY = window.innerHeight / 2 - 40;
-
-            letters.forEach((letter, index) => {
-
-                const targetX = currentX;
-
-                setTimeout(() => {
-
-                    letter.style.left = targetX + "px";
-                    letter.style.top = targetY + "px";
-                    letter.style.transform = "rotate(0deg)";
-
-                }, index * 80);
-
-                currentX += widths[index] + spacing;
-            });
-        });
+    if (response === "yes") {
+        window.location.href = "response.html";
     }
 
-
-    function submitResponse() {
-        let response = document
-            .getElementById("response")
-            .value
-            .trim()
-            .toLowerCase();
-
-        localStorage.setItem("userResponse", response);
-
-        if (response === "yes") {
-            window.location.href = "response.html";
-        }
-        else if (response === "no") {
-            window.location.href = "response2.html";
-        }
-        else {
-            alert("Please type Yes or No.");
-        }
+    else if (response === "no") {
+        window.location.href = "response2.html";
     }
 
+    else {
+        alert("Please type Yes or No.");
+    }
+}
 
-    window.onload = createFlyingText;
+
+window.onload = createFlyingText;
+</script>
