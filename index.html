@@ -71,18 +71,17 @@ button {
             span.style.opacity = "1";
             span.style.pointerEvents = "none";
 
-            // Začátek nahoře nad obrazovkou
-            span.style.left = Math.random() * 100 + "vw";
+            // Začátek nad obrazovkou
+            span.style.left = "0px";
             span.style.top = "-100px";
 
-            // Náhodné natočení
+            // Lehké náhodné natočení
             span.style.transform =
-                `rotate(${Math.random() * 360 - 180}deg) scale(${0.5 + Math.random()})`;
+                "rotate(" + (Math.random() * 60 - 30) + "deg)";
 
             span.style.transition =
-                "left 1.5s ease-in-out, " +
-                "top 1.5s cubic-bezier(.2,.8,.2,1), " +
-                "transform 1.5s ease-in-out";
+                "top 1s cubic-bezier(.2,.8,.3,1), " +
+                "transform 1s ease-out";
 
             document.body.appendChild(span);
 
@@ -103,21 +102,22 @@ button {
             const spacing = 2;
             totalWidth += spacing * (letters.length - 1);
 
+            // Zarovnání textu doprostřed obrazovky
             let currentX = (window.innerWidth - totalWidth) / 2;
 
             const targetY = window.innerHeight / 2 - 40;
 
             letters.forEach((letter, index) => {
 
+                const targetX = currentX;
+
                 setTimeout(() => {
 
-                    letter.style.left = currentX + "px";
+                    letter.style.left = targetX + "px";
                     letter.style.top = targetY + "px";
+                    letter.style.transform = "rotate(0deg)";
 
-                    letter.style.transform =
-                        "rotate(0deg) scale(1)";
-
-                }, index * 100);
+                }, index * 80);
 
                 currentX += widths[index] + spacing;
             });
@@ -147,4 +147,3 @@ button {
 
 
     window.onload = createFlyingText;
-</script>
