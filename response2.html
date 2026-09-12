@@ -11,7 +11,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: linear-gradient(45deg, WHITE, GRAY, WHITE);
+            background: linear-gradient(45deg, White, gray, white);
             font-family: Arial, sans-serif;
             color: white;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
@@ -22,37 +22,19 @@
             opacity: 0;
             transition: opacity 0.5s ease-in-out;
         }
-       input {
-    margin-top: 30px;
-    width: 200px;
-    height: 50px;
-    font-size: 20px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 10px;
-    box-sizing: border-box;
-    text-align: center;
-}
-
-button {
-    margin-top: 25px;
-    width: 70px;
-    height: 30px;
-    font-size: 10px;
-    font-weight: bold;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-}
+        input, button {
+            margin-top: 20px;
+            font-size: 18px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
     <h1 id="text"></h1>
-    <input type="text" id="response" placeholder="Write Yes or No...">
-    <button onclick="submitResponse()">Send</button>
-    
     <script>
-        const text = "IT'S SUNNY! WE ARE GOING OUT!";
+        const text = "I WILL SQUEEZE YOUR NECK!!!";
         let index = 0;
         function showText() {
             if (index < text.length) {
@@ -63,21 +45,8 @@ button {
             }
         }
         
-      function submitResponse() {
-    let response = document.getElementById("response").value.trim().toLowerCase();
-
-    localStorage.setItem("userResponse", response);
-
-    if (response === "yes") {
-        window.location.href = "response.html";
-    } 
-    else if (response === "no") {
-        window.location.href = "response2.html";
-    } 
-    else {
-        alert("Please type Yes or No.");
-    }
-}
-        
         window.onload = showText;
     </script>
+   
+</body>
+</html>
