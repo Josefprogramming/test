@@ -51,33 +51,100 @@ button {
     <input type="text" id="response" placeholder="Write Yes or No...">
     <button onclick="submitResponse()">Send</button>
     
-    <script>
-        const text = "IT'S SUNNY! WE ARE GOING OUT!";
-        let index = 0;
-        function showText() {
-            if (index < text.length) {
-                document.getElementById("text").innerHTML += text[index];
-                document.getElementById("text").style.opacity = 1;
-                index++;
-                setTimeout(showText, 100);
-            }
-        }
-        
-      function submitResponse() {
-    let response = document.getElementById("response").value.trim().toLowerCase();
+   <script>
+    const text = "IT'S SUNNY! WE ARE GOING OUT!";
+    const container = document.getElementById("text");
 
-    localStorage.setItem("userResponse", response);
+    function createFlyingText() {
+        container.innerHTML = "";
 
-    if (response === "yes") {
-        window.location.href = "response.html";
-    } 
-    else if (response === "no") {
-        window.location.href = "response2.html";
-    } 
-    else {
-        alert("Please type Yes or No.");
+        const letters = [];
+
+        text.split("").forEach((char) => {
+            const span = document.createElement("span");
+
+            span.textContent = char === " " ? "\u00A0" : char;
+
+            span.style.position = "fixed";
+            span.style.fontSize = "clamp(28px, 5vw, 48px)";
+            span.style.fontWeight = "bold";
+            span.style.opacity = "1";
+            span.style.pointerEvents = "none";
+
+            // Začátek nahoře nad obrazovkou
+            span.style.left = Math.random() * 100 + "vw";
+            span.style.top = "-100px";
+
+            // Náhodné natočení
+            span.style.transform =
+                `rotate(${Math.random() * 360 - 180}deg) scale(${0.5 + Math.random()})`;
+
+            span.style.transition =
+                "left 1.5s ease-in-out, " +
+                "top 1.5s cubic-bezier(.2,.8,.2,1), " +
+                "transform 1.5s ease-in-out";
+
+            document.body.appendChild(span);
+
+            letters.push(span);
+        });
+
+        requestAnimationFrame(() => {
+
+            let totalWidth = 0;
+            const widths = [];
+
+            letters.forEach(letter => {
+                const width = letter.getBoundingClientRect().width;
+                widths.push(width);
+                totalWidth += width;
+            });
+
+            const spacing = 2;
+            totalWidth += spacing * (letters.length - 1);
+
+            let currentX = (window.innerWidth - totalWidth) / 2;
+
+            const targetY = window.innerHeight / 2 - 40;
+
+            letters.forEach((letter, index) => {
+
+                setTimeout(() => {
+
+                    letter.style.left = currentX + "px";
+                    letter.style.top = targetY + "px";
+
+                    letter.style.transform =
+                        "rotate(0deg) scale(1)";
+
+                }, index * 100);
+
+                currentX += widths[index] + spacing;
+            });
+        });
     }
-}
-        
-        window.onload = showText;
-    </script>
+
+
+    function submitResponse() {
+        let response = document
+            .getElementById("response")
+            .value
+            .trim()
+            .toLowerCase();
+
+        localStorage.setItem("userResponse", response);
+
+        if (response === "yes") {
+            window.location.href = "response.html";
+        }
+        else if (response === "no") {
+            window.location.href = "response2.html";
+        }
+        else {
+            alert("Please type Yes or No.");
+        }
+    }
+
+
+    window.onload = createFlyingText;
+</script>
